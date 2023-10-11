@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,8 @@ import ly.count.android.sdk.Countly;
 import ly.count.android.sdk.CountlyStore;
 import ly.count.android.sdk.ModuleLog;
 import ly.count.android.sdk.Utils;
+
+import static android.content.Context.RECEIVER_EXPORTED;
 
 /**
  * Just a public holder class for Messaging-related display logic, listeners, managers, etc.
@@ -784,7 +787,7 @@ public class CountlyPush {
             IntentFilter filter = new IntentFilter();
             filter.addAction(Countly.CONSENT_BROADCAST);
             BroadcastReceiver consentReceiver = new ConsentBroadcastReceiver();
-            countlyConfigPush.application.registerReceiver(consentReceiver, filter, countlyConfigPush.application.getPackageName() + COUNTLY_BROADCAST_PERMISSION_POSTFIX, null);
+            ContextCompat.registerReceiver(countlyConfigPush.application, consentReceiver, filter, countlyConfigPush.application.getPackageName() + COUNTLY_BROADCAST_PERMISSION_POSTFIX, null, ContextCompat.RECEIVER_NOT_EXPORTED);
         }
 
         if (countlyConfigPush.provider == Countly.CountlyMessagingProvider.HMS && getPushConsent(countlyConfigPush.application)) {
