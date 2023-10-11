@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -293,6 +294,6 @@ public class App extends Application {
         };
         IntentFilter filter = new IntentFilter();
         filter.addAction(CountlyPush.SECURE_NOTIFICATION_BROADCAST);
-        registerReceiver(messageReceiver, filter, getPackageName() + COUNTLY_BROADCAST_PERMISSION_POSTFIX, null);
+        ContextCompat.registerReceiver(this,messageReceiver, filter, getPackageName() + COUNTLY_BROADCAST_PERMISSION_POSTFIX, null,ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 }
